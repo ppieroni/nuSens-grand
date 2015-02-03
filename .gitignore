@@ -1,0 +1,6 @@
+*.*
+./fig/*
+!fig/*.*
+!*.tex
+!*.sh
+!.gitignore
