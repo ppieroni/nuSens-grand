@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage[absolute, overlay]{textpos}
 \input{htmlColors.tex}
 
 \author{Jaime Alvarez-Mu\~niz\inst{1} \and Pablo Pieroni\inst{2} }
@@ -48,12 +49,12 @@
 
 \begin{frame}{Radio footprint}
 		\scriptsize
-		\begin{block}{Cherenkov emision projection over the ground}
+		\begin{block}{Cherenkov emision projected over the ground}
 			\begin{center}
 			\pgfimage[width=0.8\textwidth]{fig/coneProy}
 			\end{center}
 		\end{block}
-		\begin{alertblock}{}
+		\begin{alertblock}{Projection width:}
 		\begin{center}
 		\begin{displaymath}
 			w^2=
@@ -84,23 +85,31 @@
 
 \begin{frame}{Efficiency calculation}
 		\scriptsize
-		\begin{block}{Visible energy: $1{\rm EeV}$}
-			\begin{center}
-			\pgfimage[width=0.49\textwidth]{fig/cores}
-			\hfill
-			\pgfimage[width=0.49\textwidth]{fig/trigger}
-			\end{center}
-		\end{block}
-		\begin{alertblock}{}
-			\begin{itemize}
-			 \item Example: Squared array. 1000 m separation between antennas. 
-			 \item Big enough to contain the shower
-			 \item 1000 core position in each $(E_{visible},\theta,\tau{\rm decayHeigh})$ bin.
-			 \item Antenna response $30-80{\rm Mhz}$/$150-900{\rm Mhz}$
-			 \item Trigger if $n$ antennas above threshold (selected by user)
-			 \item Identification efficiency supposed 0.9 every bin..
-			\end{itemize}
-		\end{alertblock}
+		\begin{textblock}{15}(0.5,1.5)
+			\begin{block}{\scriptsize Visible energy: $1{\rm EeV}$}
+				\begin{center}
+				\pgfimage[height=0.3\textwidth]{fig/cores}
+				\hfill
+				\pgfimage[height=0.3\textwidth]{fig/trigger}
+				\end{center}
+			\end{block}
+		\end{textblock}
+		\begin{textblock}{15}(0.5,9.1)
+			\begin{alertblock}{}
+				\begin{itemize}\scriptsize
+				 \item Example: Squared array. 1000 m separation between antennas. 
+				 \item Big enough to contain the shower whole.
+				 \item 1000 core position in each $(E_{visible},\theta,\tau_{\rm decayHeight})$ bin.
+				 \item Antenna response $30-80{\rm Mhz}$/$150-900{\rm Mhz}$.
+				 \item Trigger if $n$ antennas above threshold (selected by user)
+				 \item Identification efficiency conservatively assumed as 0.9:
+					 \begin{itemize}\tiny
+					 \item Based on the apparent velocity of the signal and the with of the footprint.
+					 \item Not optimized yet
+					 \end{itemize}
+				\end{itemize}
+			\end{alertblock}
+		\end{textblock}
 \end{frame}
 
 \begin{frame}{Exposure calculation}
@@ -112,17 +121,17 @@
 			{\cal E} (E_\nu) = 2 \pi 
 			\textcolor{Red}{T A}
 			\int_{0}^{\infty} 
-			\int_{\theta_D^{cut}}^{\theta_D^{max}} 
+			\int_{\theta^{cut}}^{\theta^{max}} 
 			\int_{0}^{E_\nu} 
 			\int_{0}^{E_\tau} 
-			\textcolor{Blue}{\epsilon (x_d,\theta_D,Ev)}
+			\textcolor{Blue}{\epsilon (x_d,\theta,E_{sh})}
 			\textcolor{DarkOrange}{
-			\frac{e^{\frac{l(x_d)}{\lambda(E_\tau)}}}{\lambda(E_\tau)}\frac{dl(x_d)}{dx_d}
+			\frac{e^{-\frac{l(x_d)}{\lambda(E_\tau)}}}{\lambda(E_\tau)}\frac{dl(x_d)}{dx_d}
 			}
-			\textcolor{DarkViolet}{P(E_v|E_\tau)}\\
-			\textcolor{Green}{P(E_\tau|E_\nu,\theta_E(\theta_D))}
-			\textcolor{Magenta}{\sin \theta_D \cos \theta_D}
-			dE_v dE_\tau  d\theta_D dx_d
+			\textcolor{DarkViolet}{P(E_{sh}|E_\tau)}\\
+			\textcolor{Green}{P(E_\tau|E_\nu,\theta)}
+			\textcolor{Magenta}{\sin \theta \cos \theta}
+			dE_{sh} dE_\tau  d\theta dx_d
 		\end{aligned}
 		\end{displaymath}
 			\end{center}
@@ -131,10 +140,10 @@
 			\begin{itemize}
 			 \item \textcolor{Red}{Time and area}
 			 \item \textcolor{Blue}{Trigger and Id efficiency}
-			 \item \textcolor{DarkOrange}{$\tau$ decay in atmosphere}
-			 \item \textcolor{DarkViolet}{Tau decay energy sampling}
+			 \item \textcolor{DarkOrange}{Probability of $\tau$ decay at vertical depth $x_d$ in atmosphere.}
+			 \item \textcolor{DarkViolet}{Probability of $\tau$ of energy $E_\tau$ producing shower of energy $E_{sh}$}
 			 \item \textcolor{Green}{Interaction inside Earth}
-			 \item \textcolor{Magenta}{Difuse flux}
+			 \item \textcolor{Magenta}{Solid angle}
 			\end{itemize}
 		\end{exampleblock}
 
@@ -142,13 +151,14 @@
 
 \begin{frame}{3yr radio array sensitivity}
 
-				\begin{alertblock}{Upper limit calculation}
+				\begin{alertblock}{\scriptsize Upper limit calculation}
 				\centering
-				Assume $\nu$ flux: $\Phi_\nu ~ = ~ k ~ E_\nu^{-2}$ $\Rightarrow$ $Sen = \frac{1}{E_{\nu}^{-2}~{\cal E}(E_\nu)}$
+				\scriptsize
+				Assume $\nu$ flux: $\Phi_\nu ~ = ~ k ~ E_\nu^{-2}$ $\Rightarrow$ ${\text Sensitivity} = \frac{2.4}{\int E_{\nu}^{-2}~{\cal E}(E_\nu) dE_\nu}$
 			\end{alertblock}
 		
 		
-		\begin{block}{Diferential limits}
+		\begin{block}{\scriptsize Diferential limit: 90000 antennas  in a 900x900m array - Trigger threshold 50${\rm \mu Vm}$/350${\rm \mu Vm}$}
 			\begin{center}
 			\pgfimage[height=0.45\textwidth]{fig/limits_future}
 			\end{center}
